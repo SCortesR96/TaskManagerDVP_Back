@@ -1,11 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.Data.Entities;
+﻿using TaskManager.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using TaskManager.Data.Task.Entities;
+using TaskManager.Data.User.Entities;
 
 namespace TaskManager.Data.Context
 {
@@ -15,16 +11,16 @@ namespace TaskManager.Data.Context
         {
         }
 
-        public DbSet<User> roles { get; set; }
-        public DbSet<User> users { get; set; }
-        public DbSet<User> taskStatuses { get; set; }
-        public DbSet<User> tasks { get; set; }
+        public DbSet<UserEntity> roles { get; set; }
+        public DbSet<UserEntity> users { get; set; }
+        public DbSet<UserEntity> taskStatuses { get; set; }
+        public DbSet<TaskEntity> tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserEntity>(entity =>
             {
                 entity.ToTable("Users");
                 entity.HasKey(e => e.Id);
@@ -36,7 +32,7 @@ namespace TaskManager.Data.Context
                 entity.HasKey(e => e.Id);
             });
 
-            modelBuilder.Entity<Entities.Task>(entity =>
+            modelBuilder.Entity<TaskEntity>(entity =>
             {
                 entity.ToTable("Tasks");
                 entity.HasKey(e => e.Id);

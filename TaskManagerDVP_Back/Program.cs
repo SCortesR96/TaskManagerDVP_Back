@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Data.Context;
-using TaskManager.Data.Repository;
+using TaskManager.Data.Task.Repository;
+using TaskManager.Data.User.Repository;
+using TaskManager.Domain.Task.Repository;
 using TaskManager.Domain.User.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlSer
 
 // ADD SCOPES
 builder.Services.AddScoped<IUsersRepository, UserRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 var app = builder.Build();
 

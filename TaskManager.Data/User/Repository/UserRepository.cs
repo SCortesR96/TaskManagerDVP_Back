@@ -1,16 +1,11 @@
 ﻿using Mapster;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskManager.Data.Context;
-using TaskManager.Data.Entities;
+using TaskManager.Data.User.Entities;
 using TaskManager.Domain.User.Models.DTO;
 using TaskManager.Domain.User.Repositories;
 
-namespace TaskManager.Data.Repository
+namespace TaskManager.Data.User.Repository
 {
     public class UserRepository : IUsersRepository
     {
@@ -23,7 +18,7 @@ namespace TaskManager.Data.Repository
 
         public async Task<List<ShowUserDTO>> GetUsers()
         {
-            List<User> result = await _context.users.Where(x => x.IsActived == true).ToListAsync();
+            List<UserEntity> result = await _context.users.Where(x => x.IsActived == true).ToListAsync();
             return result.Adapt<List<ShowUserDTO>>();
         }
 
@@ -31,8 +26,7 @@ namespace TaskManager.Data.Repository
         {
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
-            var userResult = user.Adapt<User>();
-            userResult.CreatedAt = DateTime.Now;
+            var userResult = user.Adapt<UserEntity>();
             userResult.CreatedBy = "scortesr";
             userResult.UpdatedBy = "scortesr";
 
@@ -59,15 +53,15 @@ namespace TaskManager.Data.Repository
             return user.Adapt<ShowUserDTO>();
         }
 
-        public async Task<Boolean> DeleteUser(int id)
+        public async Task<bool> DeleteUser(int id)
         {
-            User user = await _context.users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var user = await _context.users.Where(x => x.Id == id).FirstOrDefaultAsync();
 
             user.IsActived = false;
 
             _context.Update(user);
-            await _context.SaveChangesAsync();
-            return true;
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
         }
     }
 }

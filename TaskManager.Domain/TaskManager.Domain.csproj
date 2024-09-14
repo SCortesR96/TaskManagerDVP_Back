@@ -12,8 +12,6 @@
     <Folder Include="TaskStatus\Enums\" />
     <Folder Include="TaskStatus\Models\" />
     <Folder Include="Task\Enums\" />
-    <Folder Include="Task\Models\" />
-    <Folder Include="Task\Repository\" />
     <Folder Include="User\Enums\" />
   </ItemGroup>
 
