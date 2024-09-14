@@ -1,0 +1,6 @@
+@TaskManagerDVP_Back_HostAddress = http://localhost:5236
+
+GET {{TaskManagerDVP_Back_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
